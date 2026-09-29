@@ -14,7 +14,8 @@ confidence score, plus the plaque density per mm² of tissue.
 # 1. environment (Python 3.9+; OpenSlide C library required)
 pip install -r requirements.txt
 
-# 2. weights (114 MB, published as a GitHub release asset)
+# 2. weights (114 MB, published as a GitHub release asset -- see "Weights" section below
+#    if this fails or you'd rather download it by hand)
 bash weights/download_weights.sh
 
 # 3. run on one slide, a list, a glob or a folder
@@ -112,4 +113,31 @@ this repository.
 
 ## Weights
 
-`amyloid_plaque_yolo11x.pt` — SHA-256 `681c2117a37e3c6043494da2459d7c4570c6f9942e5944d11aa6e9834b1f1840`.
+The trained model (`amyloid_plaque_yolo11x.pt`, 114 MB) isn't stored in this git repository —
+it's attached to the GitHub **[Releases](../../releases)** page, under the
+**`amyloid-plaque-v1.0`** release, so the repo itself stays small.
+
+**Easiest way to get it** (does steps 2-4 below automatically):
+```bash
+bash weights/download_weights.sh
+```
+This downloads the file to `weights/amyloid_plaque_yolo11x.pt` and checks it against
+`weights/SHA256SUMS`. `infer_wsi.py` looks for the weights at exactly that path by default, so
+no further setup is needed once this succeeds.
+
+**If that script doesn't work** (no internet from this machine, corporate proxy, etc.), get it
+by hand:
+1. Go to this repo's **Releases** page (top right of the repo, or
+   `github.com/Center-for-ComputationalNeuropathology/NeuroSpot-YOLO/releases`).
+2. Open the **`amyloid-plaque-v1.0`** release and download the `amyloid_plaque_yolo11x.pt`
+   asset (e.g. on another machine with internet access, then copy it over).
+3. Place the file at `amyloid_plaque/weights/amyloid_plaque_yolo11x.pt` (i.e. next to
+   `SHA256SUMS` in this folder), or pass its path explicitly with `infer_wsi.py --weights /path/to/amyloid_plaque_yolo11x.pt`.
+4. Check it downloaded correctly:
+   ```bash
+   cd amyloid_plaque/weights && sha256sum -c SHA256SUMS
+   ```
+   It should print `amyloid_plaque_yolo11x.pt: OK`. If it prints `FAILED`, the download was
+   corrupted or incomplete — re-download it.
+
+SHA-256: `681c2117a37e3c6043494da2459d7c4570c6f9942e5944d11aa6e9834b1f1840`
