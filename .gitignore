@@ -1,0 +1,7 @@
+*.pt
+!**/weights/SHA256SUMS
+__pycache__/
+results/
+runs/
+dataset*/
+*.svs
