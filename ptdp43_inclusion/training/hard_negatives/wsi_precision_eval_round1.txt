@@ -1,0 +1,36 @@
+labelled 185 / 185
+
+== v1   (10 slides, 3045 mm2 tissue)
+band            dets    n  real  not  uns   prec  est.real
+0.10-0.25    22422   25     3   21    1   0.12      2803
+0.25-0.35     6938   25     3   22    0   0.12       833
+0.35-0.50     3522   25     6   19    0   0.24       845
+0.50-1.00      357   25     7   18    0   0.28       100
+ threshold    dets  est.real precision  real/mm2
+      0.10   33239      4581      0.14     1.504
+      0.15   22585      3249      0.14     1.067
+      0.20   15914      2415      0.15     0.793
+      0.25   10817      1778      0.16     0.584
+      0.35    3879       945      0.24     0.310
+      0.50     357       100      0.28     0.033
+
+== hn1   (10 slides, 3045 mm2 tissue)
+band            dets    n  real  not  uns   prec  est.real
+0.10-0.25     1978   26    12   14    0   0.46       913
+0.25-0.35      356   26    13   12    1   0.52       185
+0.35-0.50      152   26    13   12    1   0.52        79
+0.50-1.00       13   10     4    6    0   0.40         5
+ threshold    dets  est.real precision  real/mm2
+      0.10    2499      1182      0.47     0.388
+      0.15    1472       708      0.48     0.233
+      0.20     901       445      0.49     0.146
+      0.25     521       269      0.52     0.088
+      0.35     165        84      0.51     0.028
+      0.50      13         5      0.40     0.002
+
+== hn1 recall relative to v1's real detections (sample: 19 real items)
+  hn1 >= 0.10: catches 50% of v1's real detections
+  hn1 >= 0.15: catches 34% of v1's real detections
+  hn1 >= 0.20: catches 14% of v1's real detections
+  hn1 >= 0.25: catches 5% of v1's real detections
+real items found by hn1 but not by v1 (>=0.10): 2

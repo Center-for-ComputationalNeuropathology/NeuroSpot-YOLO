@@ -1,0 +1,36 @@
+slide	used_for
+NACC018551_11_pTDP-43_103416	hard-negative mining (reviewed detections became training negatives/positives)
+NACC026837,7,pTDP-43_114717	hard-negative mining (reviewed detections became training negatives/positives)
+NACC049564_14_pTDP-43_153914	hard-negative mining (reviewed detections became training negatives/positives)
+NACC080581_7_pTDP-43_151946	hard-negative mining (reviewed detections became training negatives/positives)
+NACC150353_7_pTDP-43_233039	hard-negative mining (reviewed detections became training negatives/positives)
+NACC151594_11_pTDP-43_155406	hard-negative mining (reviewed detections became training negatives/positives)
+NACC168811_7_pTDP-43_122638	hard-negative mining (reviewed detections became training negatives/positives)
+NACC225307_7_pTDP-43_120222	hard-negative mining (reviewed detections became training negatives/positives)
+NACC228182,11,pTDP-43_113745	hard-negative mining (reviewed detections became training negatives/positives)
+NACC292983_11_pTDP-43_173341	hard-negative mining (reviewed detections became training negatives/positives)
+NACC404492,14,pTDP-43_181302	hard-negative mining (reviewed detections became training negatives/positives)
+NACC433911_7_pTDP-43_105446	hard-negative mining (reviewed detections became training negatives/positives)
+NACC452212,14,pTDP-43_170131	hard-negative mining (reviewed detections became training negatives/positives)
+NACC483537_7_pTDP-43_141009	hard-negative mining (reviewed detections became training negatives/positives)
+NACC484520,7,pTDP-43_135636	hard-negative mining (reviewed detections became training negatives/positives)
+NACC560168,7,pTDP-43_214131	hard-negative mining (reviewed detections became training negatives/positives)
+NACC599913,11,pTDP-43_134109	hard-negative mining (reviewed detections became training negatives/positives)
+NACC646853,7,pTDP-43_162832	hard-negative mining (reviewed detections became training negatives/positives)
+NACC656857,11,pTDP-43_182600	hard-negative mining (reviewed detections became training negatives/positives)
+NACC694029,11,pTDP-43_165922	hard-negative mining (reviewed detections became training negatives/positives)
+NACC714732_11_pTDP-43_140917	hard-negative mining (reviewed detections became training negatives/positives)
+NACC776992,7,pTDP-43_144400	hard-negative mining (reviewed detections became training negatives/positives)
+NACC854099_11_pTDP-43_103701	hard-negative mining (reviewed detections became training negatives/positives)
+NACC909269,11,pTDP-43_221355	hard-negative mining (reviewed detections became training negatives/positives)
+NACC939254_11_pTDP-43_193550	hard-negative mining (reviewed detections became training negatives/positives)
+NACC083765_11_pTDP-43_095923	held-out whole-slide evaluation (blind review), not trained on
+NACC101290_7_pTDP-43_180452	held-out whole-slide evaluation (blind review), not trained on
+NACC400623,14,pTDP-43_144433	held-out whole-slide evaluation (blind review), not trained on
+NACC416157_7_pTDP-43_140327	held-out whole-slide evaluation (blind review), not trained on
+NACC593530_7_pTDP-43_183233	held-out whole-slide evaluation (blind review), not trained on
+NACC722235_7_pTDP-43_134239	held-out whole-slide evaluation (blind review), not trained on
+NACC766681,11,pTDP-43_160056	held-out whole-slide evaluation (blind review), not trained on
+NACC839989,11,pTDP-43_134247	held-out whole-slide evaluation (blind review), not trained on
+NACC919871,14,pTDP-43_113621	held-out whole-slide evaluation (blind review), not trained on
+NACC930186,14,pTDP-43_193754	held-out whole-slide evaluation (blind review), not trained on

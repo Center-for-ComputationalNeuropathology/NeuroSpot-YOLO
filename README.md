@@ -10,9 +10,10 @@ a model card documenting validation performance and limitations.
 | Model | Target | Status |
 |---|---|---|
 | [`amyloid_plaque/`](amyloid_plaque/) | Amyloid-β plaques (4G8 IHC) | Released |
+| [`ptdp43_inclusion/`](ptdp43_inclusion/) | pTDP-43 neuronal cytoplasmic inclusions (pTDP-43 IHC) | Released |
 
-More neuropathology targets (tau, TDP-43, Lewy body) are planned; each will follow the same
-layout as `amyloid_plaque/` below.
+More neuropathology targets (tau, Lewy body) are planned; each will follow the same
+layout as the folders above.
 
 ## Layout (per model)
 
@@ -31,8 +32,9 @@ layout as `amyloid_plaque/` below.
 
 ## Quick start
 
-See [`amyloid_plaque/README.md`](amyloid_plaque/README.md) for the currently released model.
-In brief:
+Each model's `README.md` has its own details and limitations
+([`amyloid_plaque/`](amyloid_plaque/README.md), [`ptdp43_inclusion/`](ptdp43_inclusion/README.md)).
+In brief (same interface for every model):
 
 ```bash
 git lfs install   # once per machine, if not already set up -- see amyloid_plaque/README.md

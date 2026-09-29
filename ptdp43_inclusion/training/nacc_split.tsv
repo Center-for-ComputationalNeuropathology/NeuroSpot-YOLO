@@ -1,0 +1,7 @@
+NACCID	slide	annotators	role
+NACC036233	NACC036233_11_pTDP-43_164617	BOP+MH	train (all 5 cases) / held out in its own CV fold
+NACC036233	NACC036233_14_pTDP-43_164143	MH	train (all 5 cases) / held out in its own CV fold
+NACC054803	NACC054803_11_pTDP-43_130444	BOP+MH	train (all 5 cases) / held out in its own CV fold
+NACC068046	NACC068046_14_pTDP-43_181207	MH	train (all 5 cases) / held out in its own CV fold
+NACC782796	NACC782796_11_pTDP-43_101105	MH	train (all 5 cases) / held out in its own CV fold
+NACC928383	NACC928383_11_pTDP-43_211907	MH	train (all 5 cases) / held out in its own CV fold
