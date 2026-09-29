@@ -14,9 +14,9 @@ confidence score, plus the plaque density per mm² of tissue.
 # 1. environment (Python 3.9+; OpenSlide C library required)
 pip install -r requirements.txt
 
-# 2. weights (114 MB, published as a GitHub release asset -- see "Weights" section below
-#    if this fails or you'd rather download it by hand)
-bash weights/download_weights.sh
+# 2. weights (114 MB, stored via Git LFS -- see "Weights" section below if `git clone`
+#    didn't already fetch it, e.g. because git-lfs wasn't installed at clone time)
+git lfs pull
 
 # 3. run on one slide, a list, a glob or a folder
 python infer_wsi.py --slides /path/to/slides/ --out results/ --dsa
@@ -113,31 +113,32 @@ this repository.
 
 ## Weights
 
-The trained model (`amyloid_plaque_yolo11x.pt`, 114 MB) isn't stored in this git repository —
-it's attached to the GitHub **[Releases](../../releases)** page, under the
-**`amyloid-plaque-v1.0`** release, so the repo itself stays small.
+The trained model (`weights/amyloid_plaque_yolo11x.pt`, 114 MB) is stored directly in this repo
+via **Git LFS** (GitHub blocks plain git files over 100 MB, so it's tracked as an LFS object
+instead — see `.gitattributes`). `infer_wsi.py` looks for it at exactly that path by default, so
+nothing extra to configure once it's downloaded.
 
-**Easiest way to get it** (does steps 2-4 below automatically):
+**If you already have `git-lfs` installed**, `git clone` fetches the real weights file
+automatically — nothing else to do. Check with:
 ```bash
-bash weights/download_weights.sh
+git lfs ls-files    # should list amyloid_plaque/weights/amyloid_plaque_yolo11x.pt
 ```
-This downloads the file to `weights/amyloid_plaque_yolo11x.pt` and checks it against
-`weights/SHA256SUMS`. `infer_wsi.py` looks for the weights at exactly that path by default, so
-no further setup is needed once this succeeds.
 
-**If that script doesn't work** (no internet from this machine, corporate proxy, etc.), get it
-by hand:
-1. Go to this repo's **Releases** page (top right of the repo, or
-   `github.com/Center-for-ComputationalNeuropathology/NeuroSpot-YOLO/releases`).
-2. Open the **`amyloid-plaque-v1.0`** release and download the `amyloid_plaque_yolo11x.pt`
-   asset (e.g. on another machine with internet access, then copy it over).
-3. Place the file at `amyloid_plaque/weights/amyloid_plaque_yolo11x.pt` (i.e. next to
-   `SHA256SUMS` in this folder), or pass its path explicitly with `infer_wsi.py --weights /path/to/amyloid_plaque_yolo11x.pt`.
-4. Check it downloaded correctly:
-   ```bash
-   cd amyloid_plaque/weights && sha256sum -c SHA256SUMS
-   ```
-   It should print `amyloid_plaque_yolo11x.pt: OK`. If it prints `FAILED`, the download was
-   corrupted or incomplete — re-download it.
+**If you don't have `git-lfs` yet** (`git clone` will leave a small text pointer file instead of
+the real weights in that case):
+```bash
+# install once (macOS: brew install git-lfs; Ubuntu/Debian: apt install git-lfs;
+# conda: conda install -c conda-forge git-lfs; HPC module systems: module load git-lfs)
+git lfs install
+git lfs pull        # fetches the real file into weights/amyloid_plaque_yolo11x.pt
+```
+
+**Verify it downloaded correctly:**
+```bash
+cd amyloid_plaque/weights && sha256sum -c SHA256SUMS
+```
+It should print `amyloid_plaque_yolo11x.pt: OK`. If it prints `FAILED`, or the file is only a few
+hundred bytes of text starting with `version https://git-lfs.github.com/...`, `git-lfs` wasn't
+installed when you cloned — install it and run `git lfs pull` as above.
 
 SHA-256: `681c2117a37e3c6043494da2459d7c4570c6f9942e5944d11aa6e9834b1f1840`

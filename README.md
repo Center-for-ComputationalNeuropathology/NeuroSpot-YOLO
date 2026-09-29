@@ -23,7 +23,7 @@ layout as `amyloid_plaque/` below.
   make_heatmap.py      # detection + density figure from infer_wsi.py's output
   requirements.txt
   weights/
-    download_weights.sh   # fetches the released weights (too large to commit to git)
+    <model>.pt          # trained weights, stored via Git LFS (see .gitattributes)
     SHA256SUMS
   training/            # scripts and config to reproduce training from scratch
   examples/             # a sample output on an unseen slide
@@ -35,9 +35,9 @@ See [`amyloid_plaque/README.md`](amyloid_plaque/README.md) for the currently rel
 In brief:
 
 ```bash
+git lfs install   # once per machine, if not already set up -- see amyloid_plaque/README.md
 cd amyloid_plaque
 pip install -r requirements.txt
-bash weights/download_weights.sh
 python infer_wsi.py --slides /path/to/slides/ --out results/ --dsa
 ```
 
@@ -45,5 +45,5 @@ python infer_wsi.py --slides /path/to/slides/ --out results/ --dsa
 
 Follow the layout above: a self-contained folder with its own `README.md` covering intended
 use, training data, validation metrics (on a genuinely held-out set), and known failure modes.
-Weights should be distributed as a GitHub release asset (referenced by `weights/download_weights.sh`
-+ `weights/SHA256SUMS`), not committed directly, to keep the repository small.
+Weights go in `weights/` tracked via Git LFS (`git lfs track "*.pt"`, already set up for the
+whole repo in `.gitattributes`), with a `SHA256SUMS` alongside for integrity checking.
