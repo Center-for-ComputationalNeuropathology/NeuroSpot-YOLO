@@ -12,9 +12,10 @@ a model card documenting validation performance and limitations.
 | [`amyloid_plaque/`](amyloid_plaque/) | Amyloid-β plaques (4G8 IHC) | Released |
 | [`ptdp43_inclusion/`](ptdp43_inclusion/) | pTDP-43 neuronal cytoplasmic inclusions (pTDP-43 IHC) | Released |
 | [`tau_tangle/`](tau_tangle/) | Neurofibrillary tangles (AT8 p-tau IHC) | Released — see limitations |
+| [`lewy_body/`](lewy_body/) | Lewy bodies (α-synuclein IHC) | **Experimental** — test release, low accuracy |
 
-A Lewy body (α-synuclein) detector is planned; it will be added once it performs
-acceptably on held-out patients, following the same layout as the folders above.
+The Lewy body detector is an experimental test release: it is included so it can be tried,
+but it does not yet perform acceptably on held-out patients (see its README).
 
 ## Layout (per model)
 
