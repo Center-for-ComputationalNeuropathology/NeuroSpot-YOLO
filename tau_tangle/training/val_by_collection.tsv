@@ -1,0 +1,3 @@
+collection	magnification	val_tiles	precision	recall	mAP50	mAP50-95
+BU (patient BU-P12699)	40x	950	0.893	0.841	0.879	0.482
+PART (PART42025, PART42027)	20x	285	0.810	0.822	0.857	0.312

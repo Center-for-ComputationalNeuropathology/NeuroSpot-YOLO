@@ -1,0 +1,3 @@
+split,number_cases,number_images,number_positive_images,number_background_images,number_objects,number_explicit_slides,number_explicit_rois,PART_sources_without_slide_roi_metadata,positive_to_background_ratio
+train,15,7208,3282,3926,,32,32,9,0.8359653591441671
+valid,3,1235,583,652,,7,7,2,0.8941717791411042

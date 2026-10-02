@@ -1,0 +1,9 @@
+# versions the released model was trained and tested with (Python 3.9)
+ultralytics==8.4.46
+torch==2.8.0
+openslide-python==1.4.1   # also needs the OpenSlide C library (apt install openslide-tools / conda install openslide)
+opencv-python-headless==4.13.0.*
+numpy>=1.24,<2.1
+pillow>=10
+scipy>=1.10
+matplotlib>=3.7
