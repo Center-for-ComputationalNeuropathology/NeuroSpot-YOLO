@@ -8,12 +8,12 @@ bounding box with a confidence score, plus the tangle density per mm² of tissue
 > It was trained on non-NACC tiles from two collections scanned at different magnifications,
 > and the training annotations have known inconsistencies.
 
-![Example: detections and tangle density on an unseen hippocampus section](examples/NACC158151_14_AT8_heatmap.png)
+![Example: detections and tangle density on an unseen hippocampus section](examples/NACC603622_14_AT8_heatmap.png)
 
-*Hippocampus section NACC158151_14 (AT8), not used for training: 3,695 tangles, 40.2 / mm² at
-conf ≥ 0.25 (841 at ≥ 0.5).*
+*Hippocampus section NACC603622_14 (AT8), not used for training: 7,278 tangles, 38.3 / mm² at
+conf ≥ 0.25 (1,963 at ≥ 0.5).*
 
-![Random tangle detections from the same section in each confidence band](examples/NACC158151_14_AT8_detection_gallery.png)
+![Random tangle detections from the same section in each confidence band](examples/NACC603622_14_AT8_detection_gallery.png)
 
 *Random detections from the same section in each confidence band (model box in blue, score top left;
 n = number of detections in that band).*
@@ -36,9 +36,9 @@ python make_heatmap.py --slide /path/to/slide.svs \
 ```
 
 A GPU is used automatically if available (`--device cpu` to force CPU). Tiles are small (67 µm)
-and overlap by 50 %, so a whole section needs many tiles (~85,000 for a 66,000 × 60,000 px
-hippocampus section): that section took ~37 min on one V100 (16 GB, `--batch 64`), much slower
-than the other NeuroSpot models; reading tiles from the slide is the bottleneck.
+and overlap by 50 %, so a whole section needs many tiles: ~85,000–170,000 for a hippocampus
+section, which took 37–74 min on one V100 (16 GB, `--batch 64`) — much slower than the other
+NeuroSpot models. The time is mostly the network itself (YOLO11x on every tile).
 
 ### Outputs
 
@@ -105,8 +105,9 @@ also in training; it is not released.
   default `--scale 40x` matches the larger and better-performing part of the training data,
   but has not been validated against pathologist counts on whole slides.
 - **Not trained on NACC / BU ART-AD slides.** All training patients are from the BU, MS and PART
-  collections. On a NACC AT8 hippocampus section (NACC158151) the model detected clear tangles
-  but also missed obvious ones; performance on other cohorts, stains or scanners is unvalidated.
+  collections. Detection completeness varies between NACC sections: on NACC603622 (shown above)
+  most dense tangles were boxed, while on NACC158151 obvious tangles were missed. Performance on
+  other cohorts, stains or scanners is unvalidated.
 - **Small objects at tile edges.** Tangles larger than ~34 µm (e.g. long flame-shaped tangles)
   can be cut by every tile and may be missed or boxed in parts.
 - **Sensitive to where a tangle falls in the tile.** With 50 % overlap most tangles are seen in
