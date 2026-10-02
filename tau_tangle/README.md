@@ -13,8 +13,10 @@ bounding box with a confidence score, plus the tangle density per mm² of tissue
 *Hippocampus section NACC158151_14 (AT8), not used for training: 3,695 tangles, 40.2 / mm² at
 conf ≥ 0.25 (841 at ≥ 0.5).*
 
-Random detections from the same section in each confidence band (model box in blue, score top
-left): [`examples/NACC158151_14_AT8_detection_gallery.png`](examples/NACC158151_14_AT8_detection_gallery.png).
+![Random tangle detections from the same section in each confidence band](examples/NACC158151_14_AT8_detection_gallery.png)
+
+*Random detections from the same section in each confidence band (model box in blue, score top left;
+n = number of detections in that band).*
 
 ## Quick start
 
