@@ -8,6 +8,11 @@ bounding box with a confidence score, plus the tangle density per mm² of tissue
 > It was trained on non-NACC tiles from two collections scanned at different magnifications,
 > and the training annotations have known inconsistencies.
 
+![Example: detections and tangle density on an unseen hippocampus section](examples/NACC158151_14_AT8_heatmap.png)
+
+*Hippocampus section NACC158151_14 (AT8), not used for training: 3,695 tangles, 40.2 / mm² at
+conf ≥ 0.25 (841 at ≥ 0.5).*
+
 ## Quick start
 
 ```bash
@@ -27,8 +32,8 @@ python make_heatmap.py --slide /path/to/slide.svs \
 
 A GPU is used automatically if available (`--device cpu` to force CPU). Tiles are small (67 µm)
 and overlap by 50 %, so a whole section needs many tiles (~85,000 for a 66,000 × 60,000 px
-hippocampus section) and is slower than the other NeuroSpot models; reading tiles from the
-slide is the bottleneck.
+hippocampus section): that section took ~37 min on one V100 (16 GB, `--batch 64`), much slower
+than the other NeuroSpot models; reading tiles from the slide is the bottleneck.
 
 ### Outputs
 
@@ -99,6 +104,12 @@ also in training; it is not released.
   but also missed obvious ones; performance on other cohorts, stains or scanners is unvalidated.
 - **Small objects at tile edges.** Tangles larger than ~34 µm (e.g. long flame-shaped tangles)
   can be cut by every tile and may be missed or boxed in parts.
+- **Sensitive to where a tangle falls in the tile.** With 50 % overlap most tangles are seen in
+  up to four tiles, yet on NACC158151 de-duplication merged only 4,310 raw boxes into 3,695
+  tangles, i.e. most tangles were detected in only one of the tiles containing them. The
+  overlap therefore raises recall substantially, and counts depend on the tiling: only compare
+  densities produced by this script with these settings (the same section scanned with
+  non-overlapping tiles gave ~1,000 detections).
 - **Validation is tile-level, on 3 patients.** Whole-slide precision and recall have not been
   measured. Treat tangles / mm² as a **relative** burden measure across slides processed the
   same way, and check that conclusions hold at higher thresholds (`--conf 0.35` / `0.5`).
