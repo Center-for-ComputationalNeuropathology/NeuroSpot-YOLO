@@ -10,8 +10,8 @@ bounding box with a confidence score, plus the tangle density per mm² of tissue
 
 ![Example: detections and tangle density on an unseen hippocampus section](examples/NACC603622_14_AT8_heatmap.png)
 
-*Hippocampus section NACC603622_14 (AT8), not used for training: 7,278 tangles, 38.3 / mm² at
-conf ≥ 0.25 (1,963 at ≥ 0.5).*
+*Hippocampus section NACC603622_14 (AT8), not used for training: 7,276 tangles, 38.3 / mm² at
+conf ≥ 0.25 (1,954 at ≥ 0.5).*
 
 ![Random tangle detections from the same section in each confidence band](examples/NACC603622_14_AT8_detection_gallery.png)
 

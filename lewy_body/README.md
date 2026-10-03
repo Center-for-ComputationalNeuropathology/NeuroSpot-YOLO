@@ -12,8 +12,8 @@ score, plus the density per mm² of tissue. Same interface as the other NeuroSpo
 
 ![Example: detections and density on an unseen section](examples/NACC378947_14_a-syn_heatmap.png)
 
-*Hippocampus section NACC378947_14 (α-synuclein), not used for training: 1,838 detections,
-4.4 / mm² at conf ≥ 0.25 (~19 min on one V100).*
+*Hippocampus section NACC378947_14 (α-synuclein), not used for training: 1,823 detections,
+4.3 / mm² at conf ≥ 0.25 (~19 min on one V100).*
 
 ![Three of the densest fields on the same section](examples/NACC378947_14_a-syn_fields.jpg)
 
