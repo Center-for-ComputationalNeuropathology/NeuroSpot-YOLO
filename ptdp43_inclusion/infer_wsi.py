@@ -17,7 +17,7 @@ How the slide is scanned (matches how the model was trained):
     wrong size.
   * Overlap + de-duplication. Tiles overlap by 25 % so an inclusion split by one tile edge is whole
     in a neighbour; overlapping boxes of the same inclusion are then merged in slide coordinates
-    (greedy, IoU > 0.3), keeping the most confident.
+    (IoU > 0.3, or a tile-edge box lying >= 50 % inside a complete box); complete boxes win over cut-off ones.
   * Tissue. Tiles that are almost entirely glass are skipped. Density is reported per mm^2 of
     tissue, measured from a tissue mask of the slide thumbnail.
 
@@ -47,6 +47,8 @@ TRAIN_PHYSICAL_UM = TRAIN_TILE_PX * TRAIN_MPP_UM    # ~269 um per tile side
 NET_INPUT_PX = 1536                                 # 1.5x upscale, as in training (640 px windows at imgsz 960)
 OVERLAP_FRAC = 0.25
 IOU_DEDUP = 0.3
+CONTAIN_DEDUP = 0.5                                 # drop a tile-edge box that lies >= 50 % inside a kept box
+EDGE_PX = 3                                         # box within this many network px of a tile border = "edge"
 MIN_TISSUE_FRAC = 0.02                              # skip tiles that are ~all glass (as in training)
 SLIDE_EXT = (".svs", ".tif", ".tiff", ".ndpi", ".mrxs", ".scn", ".vms", ".vmu", ".bif", ".svslide")
 
@@ -82,13 +84,21 @@ def tissue_mask(slide):
     return keep, ds
 
 
-def dedup(boxes, thr=IOU_DEDUP):
-    """Greedy merge of overlapping boxes (x1,y1,x2,y2,conf) in slide coordinates."""
+def dedup(boxes, thr=IOU_DEDUP, contain=CONTAIN_DEDUP):
+    """Merge duplicate detections from overlapping tiles, in slide coordinates.
+
+    boxes: N x 6 array (x1, y1, x2, y2, conf, edge), edge = 1 if the box touched the border of
+    the tile it came from (the object may be cut off there and seen whole in a neighbouring tile).
+    Boxes away from tile borders are taken first, most confident first, so a cut-off fragment never
+    replaces the complete box. A box is dropped if it overlaps an already-kept box with IoU > thr;
+    an edge box is also dropped if at least `contain` of its area lies inside a kept box.
+    Returns N x 5 (x1, y1, x2, y2, conf)."""
     if not len(boxes):
-        return boxes
-    b = boxes[np.argsort(-boxes[:, 4])]
-    keep = []
+        return boxes[:, :5]
+    b = boxes[np.lexsort((-boxes[:, 4], boxes[:, 5]))]
     area = (b[:, 2] - b[:, 0]) * (b[:, 3] - b[:, 1])
+    edge = b[:, 5] > 0
+    keep = []
     alive = np.ones(len(b), bool)
     for i in range(len(b)):
         if not alive[i]:
@@ -100,9 +110,10 @@ def dedup(boxes, thr=IOU_DEDUP):
         yy2 = np.minimum(b[i, 3], b[:, 3])
         inter = np.clip(xx2 - xx1, 0, None) * np.clip(yy2 - yy1, 0, None)
         iou = inter / (area[i] + area - inter + 1e-9)
-        alive &= ~(iou > thr)
+        inside = inter / (area + 1e-9)
+        alive &= ~((iou > thr) | (edge & (inside >= contain)))
         alive[i] = False
-    return b[keep]
+    return b[keep, :5]
 
 
 def slide_mpp(slide, override):
@@ -159,14 +170,15 @@ def run_slide(path, model, args, device):
                                 half=device != "cpu")
             for (x, y), r in zip(kept, res):
                 for b, c in zip(r.boxes.xyxy.cpu().numpy(), r.boxes.conf.cpu().numpy()):
-                    raw.append([x + b[0] * scale, y + b[1] * scale, x + b[2] * scale, y + b[3] * scale, float(c)])
+                    edge = float(min(b[0], b[1]) < EDGE_PX or max(b[2], b[3]) > NET_INPUT_PX - EDGE_PX)
+                    raw.append([x + b[0] * scale, y + b[1] * scale, x + b[2] * scale, y + b[3] * scale, float(c), edge])
         if (i // args.batch) % 20 == 0:
             print(f"    {min(i + args.batch, len(pos))}/{len(pos)} tiles, {len(raw)} raw boxes, "
                   f"{time.time() - t0:.0f}s", flush=True)
         if device != "cpu" and (i // args.batch) % 25 == 0:
             torch.cuda.empty_cache()
 
-    det = dedup(np.array(raw).reshape(-1, 5))
+    det = dedup(np.array(raw).reshape(-1, 6))
     # keep detections whose centre lies on tissue
     if len(det):
         cy = np.clip(((det[:, 1] + det[:, 3]) / 2 / ds).astype(int), 0, mask.shape[0] - 1)

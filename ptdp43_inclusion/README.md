@@ -55,7 +55,7 @@ These choices mirror how the training data was made; changing them changes the r
 2. **Tissue.** A tissue mask from the slide thumbnail selects which tiles to read; near-blank tiles
    are skipped. Density is reported per mm² of this tissue mask.
 3. **Overlap and de-duplication.** Tiles overlap by 25 %; boxes of the same inclusion from
-   neighbouring tiles are merged in slide coordinates (greedy, IoU > 0.3, keep the most confident).
+   neighbouring tiles are merged in slide coordinates (IoU > 0.3, or a box cut off by a tile edge lying ≥ 50 % inside a complete box; complete boxes are kept over cut-off ones).
 4. **Threshold.** Boxes with confidence ≥ 0.25 are kept (the best-F1 point in cross-validation
    was 0.24). Confidences are moderate overall; see Limitations before raising or lowering it.
 

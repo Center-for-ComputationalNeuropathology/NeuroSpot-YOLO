@@ -55,7 +55,7 @@ Options: `--conf` (default 0.25), `--mpp`, `--batch`, `--device`.
 2. **Tissue.** A tissue mask from the slide thumbnail selects which tiles to read; density is
    per mm² of that mask.
 3. **Overlap and de-duplication.** Tiles overlap by 25 %; boxes of the same object from
-   neighbouring tiles are merged (greedy, IoU > 0.3, keep the most confident).
+   neighbouring tiles are merged (IoU > 0.3, or a box cut off by a tile edge lying ≥ 50 % inside a complete box; complete boxes are kept over cut-off ones).
 4. **Threshold.** Boxes with confidence ≥ 0.25 are kept.
 
 ## Model

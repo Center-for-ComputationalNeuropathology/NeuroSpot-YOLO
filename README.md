@@ -76,8 +76,9 @@ selection.
 
 Slides are tiled at the physical scale each model was trained on, using the resolution stored
 in the slide, so scans at other magnifications are rescaled to match. All validation so far is on
-40× scans. Overlapping tiles are used and duplicate
-detections across tile boundaries are merged. Detection densities are only comparable between
+40× scans. Tiles overlap, and an object on a tile boundary is
+reported once: boxes from neighbouring tiles that overlap (IoU > 0.3), or a cut-off box lying
+mostly inside a complete one, are merged, keeping the complete box. Detection densities are only comparable between
 slides processed with the same model and settings.
 
 ## Repository layout
@@ -105,5 +106,4 @@ lists the patients used for training so that results can be reported on independ
 
 ## Contact
 
-Questions and issues: please open a GitHub issue, or contact the Center for Computational
-Neuropathology at neuropathcompcenter.mssm@gmail.com.
+Please use GitHub issues for questions and bug reports.

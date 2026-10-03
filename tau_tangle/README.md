@@ -64,7 +64,7 @@ Options: `--scale` (`40x` default, or `20x`; see below), `--conf` (default 0.25)
    tiles are skipped. Density is reported per mm² of this tissue mask.
 3. **Overlap and de-duplication.** Tiles overlap by 50 % so any tangle up to half a tile across
    (~34 µm at 40×) is whole in at least one tile; boxes of the same tangle from neighbouring
-   tiles are merged in slide coordinates (greedy, IoU > 0.3, keep the most confident).
+   tiles are merged in slide coordinates (IoU > 0.3, or a box cut off by a tile edge lying ≥ 50 % inside a complete box; complete boxes are kept over cut-off ones).
 4. **Threshold.** Boxes with confidence ≥ 0.25 are kept.
 
 ## Model

@@ -6,7 +6,7 @@ confidence score, plus the plaque density per mm² of tissue.
 
 ![Example: detections and plaque density on an unseen hippocampus section](examples/NACC158151_14_AB4G8_heatmap.png)
 
-*Hippocampus section NACC158151 (AB4G8), not used for training: 1,279 plaques, 14.4 / mm² at conf ≥ 0.25.*
+*Hippocampus section NACC158151 (AB4G8), not used for training: 1,209 plaques, 13.6 / mm² at conf ≥ 0.25.*
 
 ## Quick start
 
@@ -52,7 +52,7 @@ These choices mirror how the training data was made; changing them changes the r
    tiles are skipped. Density is reported per mm² of this tissue mask.
 3. **Overlap and de-duplication.** Tiles overlap by 25 % so a plaque on one tile's edge is whole
    in its neighbour; boxes of the same plaque from neighbouring tiles are merged in slide
-   coordinates (greedy, IoU > 0.3, keep the most confident). Without this, plaques near tile
+   coordinates (IoU > 0.3, or a box cut off by a tile edge lying ≥ 50 % inside a complete box; complete boxes are kept over cut-off ones). Without this, plaques near tile
    edges are counted twice.
 4. **Threshold.** Boxes with confidence ≥ 0.25 are kept.
 
